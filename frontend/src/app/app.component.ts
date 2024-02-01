@@ -32,7 +32,9 @@ export class AppComponent {
     this.messages.push(dto.echoValue!);
   }
 
+
   sendMessage() {
+    //Post-recording note: If you just make a class and instantiate it, the eventType is automatically assigned
     var object = {
       eventType: "ClientWantsToEchoServer",
       messageContent: this.messageContent.value!
