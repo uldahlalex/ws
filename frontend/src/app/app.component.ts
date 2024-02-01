@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {BaseDto, ServerEchosClientDto} from "../BaseDto";
 
 @Component({
   selector: 'app-root',
@@ -21,12 +22,21 @@ export class AppComponent {
 
   constructor() {
     this.ws.onmessage = message => {
-      this.messages.push(message.data)
+      const messageFromServer = JSON.parse(message.data) as BaseDto<any>;
+      // @ts-ignore
+      this[messageFromServer.eventType].call(this, messageFromServer);
     }
   }
 
+  ServerEchosClient(dto: ServerEchosClientDto) {
+    this.messages.push(dto.echoValue!);
+  }
 
   sendMessage() {
-    this.ws.send(this.messageContent.value!);
+    var object = {
+      eventType: "ClientWantsToEchoServer",
+      messageContent: this.messageContent.value!
+    }
+    this.ws.send(JSON.stringify(object));
   }
 }

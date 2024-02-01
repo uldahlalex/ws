@@ -1,6 +1,14 @@
 
 
+using System.Reflection;
 using Fleck;
+using lib;
+
+var builder = WebApplication.CreateBuilder(args);
+
+var clientEventHandlers = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());
+
+var app = builder.Build();
 
 var server = new WebSocketServer("ws://0.0.0.0:8181");
 
@@ -14,11 +22,30 @@ server.Start(ws =>
     };
     ws.OnMessage = message =>
     {
-        foreach (var webSocketConnection in wsConenctions)
+        // evaluate whether or not message.eventType == 
+            // trigger event handler
+        try
         {
-            webSocketConnection.Send(message);
+            app.InvokeClientEventHandler(clientEventHandlers, ws, message);
+
+        }
+        catch (Exception e)
+        {
+            // your exception handling here
         }
     };
 });
 
-WebApplication.CreateBuilder(args).Build().Run();
+Console.ReadLine();
+
+
+
+
+
+
+
+
+
+
+
+
