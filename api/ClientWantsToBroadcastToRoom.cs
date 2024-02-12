@@ -44,6 +44,8 @@ public class ClientWantsToBroadcastToRoom : BaseEventHandler<ClientWantsToBroadc
         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://toxicityfilter.cognitiveservices.azure.com/contentsafety/text:analyze?api-version=2023-10-01");
 
         request.Headers.Add("accept", "application/json");
+        //The key from below has been regenerated / rotated on azure so it cannot be used - insert your own value (with environment variable of course)
+        //I specifically do not want to change the code from I produced in the video, so I just leave this comment instead
         request.Headers.Add("Ocp-Apim-Subscription-Key", "a3475c7f4787496391e3b80f1d6f38d4");
 
         var req = new RequestModel(message, new List<string>() { "Hate", "Violence" }, "FourSeverityLevels");
