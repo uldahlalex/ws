@@ -22,7 +22,11 @@ public static class StateService
     public static bool AddToRoom(IWebSocketConnection ws, int room)
     {
         if (!Rooms.ContainsKey(room))
+        {
+            Console.WriteLine("Creating room " + room);
             Rooms.Add(room, new HashSet<Guid>());
+
+        }
         return Rooms[room].Add(ws.ConnectionInfo.Id);
     }
 
