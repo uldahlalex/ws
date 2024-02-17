@@ -10,11 +10,11 @@ public static class Startup
 {
     public static void Main(string[] args)
     {
-        Statup(args);
-        Console.ReadLine();
+        var app = Statup(args);
+        app.Run();
     }
 
-    public static void Statup(string[] args)
+    public static WebApplication Statup(string[] args)
     {
         
         var builder = WebApplication.CreateBuilder(args);
@@ -55,7 +55,7 @@ public static class Startup
                 }
             };
         });
-        
+        return app;
 
     }
 }
