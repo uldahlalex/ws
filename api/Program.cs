@@ -22,8 +22,10 @@ public static class Startup
         var clientEventHandlers = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());
 
         var app = builder.Build();
-
-        var server = new WebSocketServer("ws://0.0.0.0:"+Environment.GetEnvironmentVariable("Port"));
+        
+        builder.WebHost.UseUrls($"http://*:9999");
+        var port = Environment.GetEnvironmentVariable("Port") ?? "8181";
+        var server = new WebSocketServer("ws://0.0.0.0:"+port);
 
 
         server.Start(ws =>
