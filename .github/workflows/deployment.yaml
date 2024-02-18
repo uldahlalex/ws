@@ -4,23 +4,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    env:
-      AZ: ${{secrets.AZ}}
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
           
       - run: cd api && dotnet publish -c Release -o publish
-
-      - name: Deploy to Heroku
-        uses: AkhileshNS/heroku-deploy@v3.13.15 
+      - uses: AkhileshNS/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: false 
+          usedocker: false
           appdir: "api" 
+        env:
+          AZ: ${{secrets.AZ}}
