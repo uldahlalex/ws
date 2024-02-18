@@ -30,6 +30,23 @@ public static class Startup
 
         server.Start(ws =>
         {
+            var keepAliveInterval = TimeSpan.FromSeconds(30); 
+            var keepAliveTimer = new System.Timers.Timer(keepAliveInterval.TotalMilliseconds)
+            {
+                AutoReset = true,
+                Enabled = true
+            };
+            keepAliveTimer.Elapsed += (sender, e) => {
+                try
+                {
+                    ws.Send("ping");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception in keep-alive timer: " + ex.Message);
+                    keepAliveTimer.Stop(); 
+                }
+            };
             ws.OnOpen = () =>
             {
                 StateService.AddConnection(ws);
