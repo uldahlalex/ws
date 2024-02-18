@@ -19,4 +19,4 @@ jobs:
           usedocker: false
           appdir: "api" 
         env:
-          AZ: ${{secrets.AZ}}
+          HD_AZ: ${{secrets.HD_AZ}}
