@@ -47,6 +47,11 @@ public static class Startup
                     keepAliveTimer.Stop(); 
                 }
             };
+            ws.OnClose = () =>
+            {
+                Console.WriteLine("Connection Closed");
+                keepAliveTimer.Stop(); 
+            };
             ws.OnOpen = () =>
             {
                 StateService.AddConnection(ws);
@@ -73,6 +78,7 @@ public static class Startup
                     // your exception handling here
                 }
             };
+  
         });
         return app;
 
