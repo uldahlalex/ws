@@ -16,7 +16,7 @@ public static class Startup
 
     public static WebApplication Statup(string[] args)
     {
-        
+        Console.WriteLine(Environment.GetEnvironmentVariable("AZ"));
         var builder = WebApplication.CreateBuilder(args);
 
         var clientEventHandlers = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());
