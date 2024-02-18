@@ -22,6 +22,7 @@ public static class Startup
         var clientEventHandlers = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());
 
         var app = builder.Build();
+
         builder.WebHost.UseUrls("http://*:9999");
 
         var port = Environment.GetEnvironmentVariable("PORT") ?? "8181";

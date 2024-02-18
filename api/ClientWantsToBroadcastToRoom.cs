@@ -19,7 +19,7 @@ public class ClientWantsToBroadcastToRoom : BaseEventHandler<ClientWantsToBroadc
 {
     public override async Task Handle(ClientWantsToBroadcastToRoomDto dto, IWebSocketConnection socket)
     {
-        await isMessageToxic(dto.message);
+        //await isMessageToxic(dto.message);
         var message = new ServerBroadcastsMessageWithUsername()
         {
             message = dto.message,
