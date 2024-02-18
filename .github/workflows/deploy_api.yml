@@ -1,11 +1,11 @@
-name: Deploy to Heroku
-
 on:
   workflow_dispatch: 
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    env:
+      AZ: ${{secrets.AZ}}
 
     steps:
       - uses: actions/checkout@v4
@@ -14,11 +14,10 @@ jobs:
         with:
           dotnet-version: '8.0.x'
           
-      - name: Publish
-        run: cd api && dotnet publish -c Release -o publish
+      - run: cd api && dotnet publish -c Release -o publish
 
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 
+        uses: AkhileshNS/heroku-deploy@v3.12.15 
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
